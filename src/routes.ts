@@ -10,7 +10,7 @@ export const protectedRoutes: string[] = [
 ]
 
 export const authRoutes: string[] = [
-    "/auth/signin",
+    "/auth/sign-in",
 ]
 
 // Routes that should be accessible only to unauthenticated users
