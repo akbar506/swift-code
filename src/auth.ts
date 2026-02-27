@@ -9,6 +9,11 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         async signIn({ user, account }) {
             if (!user || !account) return false; // Sign-in failed, no user or account information
 
+            if ( account.provider == "credentials") {
+                return true; // If signing in with credentials, skip database checks and allow sign-in
+            }
+
+            // For OAuth providers, check if the user exists in the database and create/update their record accordingly
             // Check If the user exists in the database
             const existingUser = await db.user.findUnique({
                 where: { email: user.email! }
