@@ -77,7 +77,7 @@ export default function SignInPage() {
                                             {...field}
                                             id="form-email"
                                             aria-invalid={fieldState.invalid}
-                                            className="h-12"
+                                            className="h-11"
                                             placeholder="Enter your email"
                                             autoComplete="off"
                                         />
@@ -100,7 +100,7 @@ export default function SignInPage() {
                                                 {...field}
                                                 id="form-password"
                                                 aria-invalid={fieldState.invalid}
-                                                className="h-12"
+                                                className="h-11"
                                                 placeholder="••••••••"
                                                 autoComplete="off"
                                                 type={isVisible ? "text" : "password"}
