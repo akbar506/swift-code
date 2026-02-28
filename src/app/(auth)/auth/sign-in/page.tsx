@@ -1,6 +1,5 @@
 "use client";
 import * as z from "zod";
-import { useTheme } from "next-themes";
 import { signInSchema } from "@/schemas/signInSchema";
 import { useForm, Controller } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -8,13 +7,13 @@ import { useState } from "react";
 import { signIn } from "next-auth/react";
 import { toast } from "sonner";
 import Image from "next/image";
-import { Field, FieldError, FieldGroup, FieldLabel } from "@/components/ui/field";
+import { Field, FieldError, FieldGroup, FieldLabel, FieldSeparator } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { Eye, EyeOff, Loader } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import OAuth from "@/components/oauth-form"
 
-export default function SignIn() {
-    const { resolvedTheme } = useTheme();
+export default function SignInPage() {
     const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
     const [isVisible, setIsVisible] = useState<boolean>(false);
 
@@ -29,6 +28,7 @@ export default function SignIn() {
     // Toggle password visibility
     const toggleVisibility = () => setIsVisible(!isVisible);
 
+    // Handle form submission for email/password sign-in
     const onSubmit = async (data: z.infer<typeof signInSchema>) => {
         setIsSubmitting(true);
 
@@ -59,10 +59,10 @@ export default function SignIn() {
         <>
             <div className="min-h-screen flex flex-col justify-center items-center space-y-8">
                 <div className="flex flex-col items-center space-y-3">
-                    <Image src={resolvedTheme === "light" ? "/logo-dark.svg" : "/logo-light.svg"} alt="Swift Code Logo" width={70} height={70} className="" />
+                    <Image src={"/logo-dark.svg"} alt="Swift Code Logo" width={70} height={70} className="dark:invert" />
                     <h1 className="text-2xl font-bold">Sign in to your account</h1>
                 </div>
-                <div className="w-full max-w-md sm:max-w-lg p-6 sm:p-10 bg-neutral-900 rounded-lg shadow-md">
+                <div className="w-full max-w-sm sm:max-w-md p-6 sm:p-10 bg-neutral-100 dark:bg-neutral-900 rounded-lg shadow-md">
                     <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
                         <FieldGroup>
                             <Controller
@@ -125,9 +125,9 @@ export default function SignIn() {
                                     </Field>
                                 )}
                             />
-                            <Button 
-                                type="submit" 
-                                className="w-full h-10 cursor-pointer" 
+                            <Button
+                                type="submit"
+                                className="w-full h-10 cursor-pointer"
                                 disabled={isSubmitting}
                             >
                                 {isSubmitting ? (
@@ -140,8 +140,13 @@ export default function SignIn() {
                                 )}
                             </Button>
                         </FieldGroup>
+                        <FieldSeparator className="*:data-[slot=field-separator-content]:bg-card">
+                            Or continue with
+                        </FieldSeparator>
                     </form>
+                    <OAuth />
                 </div>
+
             </div>
         </>
     )

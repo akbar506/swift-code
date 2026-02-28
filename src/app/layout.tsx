@@ -17,8 +17,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Swift Code",
-  description: "A powerful code editor For Developers",
+  title: "Swift Code - A Code Editor for Developers",
+  description: "A powerful code editor built by developer, for developers.",
 };
 
 export default async function RootLayout({
@@ -29,8 +29,8 @@ export default async function RootLayout({
   const session = await auth();
 
   return (
-    <html lang="en" suppressHydrationWarning>
-      <SessionProvider session={session}>
+    <SessionProvider session={session}>
+      <html lang="en" suppressHydrationWarning>
         <body
           className={`${geistSans.variable} ${geistMono.variable} antialiased`}
         >
@@ -44,7 +44,7 @@ export default async function RootLayout({
             <Toaster position="top-center" richColors={true} />
           </ThemeProvider>
         </body>
-      </SessionProvider>
-    </html>
+      </html>
+    </SessionProvider>
   );
 }
