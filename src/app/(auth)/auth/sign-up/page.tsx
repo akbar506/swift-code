@@ -1,0 +1,177 @@
+"use client";
+import * as z from "zod";
+import { signUpSchema } from "@/schemas/signUpSchema";
+import { useForm, Controller } from "react-hook-form"
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useState } from "react";
+import Image from "next/image";
+import { Field, FieldError, FieldGroup, FieldLabel, FieldSeparator } from "@/components/ui/field";
+import { Input } from "@/components/ui/input";
+import { Eye, EyeOff, Loader } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import OAuth from "@/components/oauth-form"
+import axios, { AxiosError } from "axios";
+import { ApiResponse } from "@/types/api-response";
+import { toast } from "sonner";
+import Link from "next/link";
+
+export default function SignUpPage() {
+    const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
+    const [isVisible, setIsVisible] = useState<boolean>(false);
+
+    const form = useForm<z.infer<typeof signUpSchema>>({
+        resolver: zodResolver(signUpSchema),
+        defaultValues: {
+            name: "",
+            email: "",
+            password: "",
+        }
+    })
+
+    // Toggle password visibility
+    const toggleVisibility = () => setIsVisible(!isVisible);
+
+    // Handle form submission for email/password sign-up
+    const onSubmit = async (data: z.infer<typeof signUpSchema>) => {
+        setIsSubmitting(true);
+        try {
+            const response = await axios.post("/api/sign-up", data);
+            toast.success("Sign-up successful!", {
+                description: response.data.message || "Please check your email for the verification code.",
+            })
+            setTimeout(() => {
+                window.location.href = "/auth/verify-email?email=" + encodeURIComponent(data.email);
+            }, 4000);
+        } catch (error) {
+            const err = error as AxiosError<ApiResponse>;
+            toast.error("Sign-up failed", {
+                description: err.response?.data.message || "An error occurred while signing up.",
+            });
+        } finally {
+            setIsSubmitting(false);
+        }
+    }
+
+    return (
+        <>
+            <div className="min-h-screen pb-10 pt-5 flex flex-col justify-center items-center space-y-8">
+                <div className="flex flex-col items-center space-y-3">
+                    <Image src={"/logo-dark.svg"} alt="Swift Code Logo" width={70} height={70} className="dark:invert" />
+                    <h1 className="text-2xl font-bold">Sign up for an account</h1>
+                </div>
+                <div className="w-full max-w-sm sm:max-w-md p-6 sm:p-10 bg-neutral-100 dark:bg-neutral-900 rounded-lg shadow-md">
+                    <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+                        <FieldGroup>
+                            <Controller
+                                name="name"
+                                control={form.control}
+                                render={({ field, fieldState }) => (
+                                    <Field data-invalid={fieldState.invalid}>
+                                        <FieldLabel htmlFor="form-name">
+                                            Name
+                                        </FieldLabel>
+                                        <Input
+                                            {...field}
+                                            id="form-name"
+                                            aria-invalid={fieldState.invalid}
+                                            className="h-11"
+                                            placeholder="Enter your name"
+                                            autoComplete="off"
+                                        />
+                                        {fieldState.invalid && (
+                                            <FieldError errors={[fieldState.error]} />
+                                        )}
+                                    </Field>
+                                )}
+                            />
+                            <Controller
+                                name="email"
+                                control={form.control}
+                                render={({ field, fieldState }) => (
+                                    <Field data-invalid={fieldState.invalid}>
+                                        <FieldLabel htmlFor="form-email">
+                                            Email Address
+                                        </FieldLabel>
+                                        <Input
+                                            {...field}
+                                            id="form-email"
+                                            aria-invalid={fieldState.invalid}
+                                            className="h-11"
+                                            placeholder="Enter your email"
+                                            autoComplete="off"
+                                        />
+                                        {fieldState.invalid && (
+                                            <FieldError errors={[fieldState.error]} />
+                                        )}
+                                    </Field>
+                                )}
+                            />
+                            <Controller
+                                name="password"
+                                control={form.control}
+                                render={({ field, fieldState }) => (
+                                    <Field data-invalid={fieldState.invalid}>
+                                        <FieldLabel htmlFor="form-password">
+                                            Password
+                                        </FieldLabel>
+                                        <div className="relative">
+                                            <Input
+                                                {...field}
+                                                id="form-password"
+                                                aria-invalid={fieldState.invalid}
+                                                className="h-11"
+                                                placeholder="••••••••"
+                                                autoComplete="off"
+                                                type={isVisible ? "text" : "password"}
+
+                                            />
+                                            <button
+                                                aria-label="toggle password visibility"
+                                                className="focus:outline-solid outline-transparent absolute right-3 top-1/2 transform -translate-y-1/2"
+                                                type="button"
+                                                onClick={toggleVisibility}
+                                            >
+                                                {isVisible ? (
+                                                    <Eye className="text-2xl text-default-400 pointer-events-none" />
+                                                ) : (
+                                                    <EyeOff className="text-2xl text-default-400 pointer-events-none" />
+                                                )}
+                                            </button>
+                                        </div>
+                                        {fieldState.invalid && (
+                                            <FieldError errors={[fieldState.error]} />
+                                        )}
+                                    </Field>
+                                )}
+                            />
+                            <Button
+                                type="submit"
+                                className="w-full h-10 cursor-pointer"
+                                disabled={isSubmitting}
+                            >
+                                {isSubmitting ? (
+                                    <>
+                                        <Loader className="mr-2 h-5 w-5 animate-spin" />
+                                        Sign Up ...
+                                    </>
+                                ) : (
+                                    'Sign Up'
+                                )}
+                            </Button>
+                        </FieldGroup>
+                        <FieldSeparator className="*:data-[slot=field-separator-content]:bg-card">
+                            Or continue with
+                        </FieldSeparator>
+                    </form>
+                    <OAuth />
+                </div>
+                    <p className="text-sm text-muted-foreground">
+                        Already have an account?{' '}
+                        <Link href="/auth/sign-in" className="underline-offset-4 hover:underline dark:text-primary">
+                            Sign in
+                        </Link>
+                    </p>
+            </div>
+        </>
+    )
+}
