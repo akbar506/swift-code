@@ -12,6 +12,7 @@ import { Input } from "@/components/ui/input";
 import { Eye, EyeOff, Loader } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import OAuth from "@/components/oauth-form"
+import Link from "next/link";
 
 export default function SignInPage() {
     const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
@@ -146,7 +147,12 @@ export default function SignInPage() {
                     </form>
                     <OAuth />
                 </div>
-
+                <p className="text-sm text-muted-foreground">
+                    Not a member?{' '}
+                    <Link href="/auth/sign-up" className="underline-offset-4 hover:underline dark:text-primary">
+                        Sign up
+                    </Link>
+                </p>
             </div>
         </>
     )

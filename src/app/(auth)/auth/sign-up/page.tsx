@@ -165,12 +165,12 @@ export default function SignUpPage() {
                     </form>
                     <OAuth />
                 </div>
-                    <p className="text-sm text-muted-foreground">
-                        Already have an account?{' '}
-                        <Link href="/auth/sign-in" className="underline-offset-4 hover:underline dark:text-primary">
-                            Sign in
-                        </Link>
-                    </p>
+                <p className="text-sm text-muted-foreground">
+                    Already have an account?{' '}
+                    <Link href="/auth/sign-in" className="underline-offset-4 hover:underline dark:text-primary">
+                        Sign in
+                    </Link>
+                </p>
             </div>
         </>
     )
