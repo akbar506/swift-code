@@ -1,8 +1,6 @@
 // All routes that don't require authentication
 export const publicRoutes: string[] = [
     // Add public routes here
-    "/api/sign-up",
-    "/api/verify-code",
     "/",
 ]
 
@@ -17,6 +15,8 @@ export const authRoutes: string[] = [
     "/auth/sign-up",
     "/auth/verify-email"
 ]
+
+export const homePage: string = "/";
 
 // Routes that should be accessible only to unauthenticated users
 export const apiAuthPrefix: string = "/api/auth";
