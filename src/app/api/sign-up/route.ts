@@ -62,15 +62,19 @@ export async function POST(req: NextRequest) {
             });
         }
 
-        const emailResponse = await sendVerificationEmail(email, verifyCode, name); // Send verification email
+        // Fetch the user again to ensure we have the latest data (especially the _id for email verification)
+        const user = await db.user.findUnique({ where: { email } });
 
+        const emailResponse = await sendVerificationEmail(email, verifyCode, name); // Send verification email
+        console.log("Email response: ", emailResponse);
         if (!emailResponse.success) {
             console.error("Failed to send verification email:", emailResponse.message);
         }
 
         return NextResponse.json({
             message: "User created successfully. Please check your email for verification.",
-            success: true
+            success: true,
+            userId: user?.id, // Return the user's _id for the email verification process
         }, { status: 201 });
 
     } catch (error) {

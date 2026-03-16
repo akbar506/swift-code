@@ -11,13 +11,15 @@ import { Eye, EyeOff, Loader } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import OAuth from "@/components/oauth-form"
 import axios, { AxiosError } from "axios";
-import { ApiResponse } from "@/types/api-response";
+import { SignUpApiResponse } from "@/types/api-response";
 import { toast } from "sonner";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 export default function SignUpPage() {
     const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
     const [isVisible, setIsVisible] = useState<boolean>(false);
+    const router = useRouter();
 
     const form = useForm<z.infer<typeof signUpSchema>>({
         resolver: zodResolver(signUpSchema),
@@ -35,15 +37,15 @@ export default function SignUpPage() {
     const onSubmit = async (data: z.infer<typeof signUpSchema>) => {
         setIsSubmitting(true);
         try {
-            const response = await axios.post("/api/sign-up", data);
+            const response = await axios.post<SignUpApiResponse>("/api/sign-up", data);
             toast.success("Sign-up successful!", {
                 description: response.data.message || "Please check your email for the verification code.",
             })
-            setTimeout(() => {
-                window.location.href = "/auth/verify-email?email=" + encodeURIComponent(data.email);
-            }, 4000);
+
+            // Navigate to the verification page with the userId as a query parameter
+            router.push(`/auth/verify-code?userId=${response.data.userId}`);
         } catch (error) {
-            const err = error as AxiosError<ApiResponse>;
+            const err = error as AxiosError<SignUpApiResponse>;
             toast.error("Sign-up failed", {
                 description: err.response?.data.message || "An error occurred while signing up.",
             });
