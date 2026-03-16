@@ -34,7 +34,7 @@ export default function VerifyCodePage() {
     const onSubmit = async (data: z.infer<typeof verifyCodeSchema>) => {
         setIsSubmitting(true);
         try {
-            const response = await axios.post<ApiResponse>("/api/verify-email", data);
+            const response = await axios.post<ApiResponse>("/api/verify-code", data);
             toast.success("Email verified successfully!", {
                 description: response.data.message || "You can now sign in to your account.",
             });
