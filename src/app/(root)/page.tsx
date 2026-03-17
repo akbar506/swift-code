@@ -4,6 +4,7 @@ import Header from "@/components/header/page";
 import FeaturesSection from "@/components/homepage/features/page";
 import HowItWorks from "@/components/homepage/howitworks/page";
 import ApiKeySection from "@/components/homepage/api-key/api-key-section";
+import PricingSection from "@/components/homepage/pricing/pricing";
 
 export default function Home() {
 
@@ -15,6 +16,7 @@ export default function Home() {
       <FeaturesSection />
       <HowItWorks />
       <ApiKeySection />
+      <PricingSection />
     </div>
     </>
   );
