@@ -1,13 +1,15 @@
 import { Metadata } from "next"
+import Header from "@/components/header/page"
 
 export const metadata: Metadata = {
-    title: "Swift Code - Your AI-Powered Code Editor",
-    description: "",
+    title: "Swift Code - The AI-powered IDE that runs in your browser",
+    description: "Experience a web-based IDE that brings AI capabilities directly to your fingertips. Use your own API keys or choose our premium plans for seamless integration.",
 }
 
 export default async function Layout({ children }: { children: React.ReactNode }) {
     return (
         <>
+            <Header />
             {children}
         </>
     )
