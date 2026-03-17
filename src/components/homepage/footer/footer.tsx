@@ -5,14 +5,14 @@ export default function Footer() {
     const currentYear = new Date().getFullYear();
 
     return (
-        <footer className="py-6 mt-12 border-t border-muted">
+        <footer className="py-6 mt-12 border-t border-foreground">
             <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                 
             {/* Bottom Section */}
             <div className="flex flex-col sm:flex-row justify-between items-center gap-6">
                 {/* Copyright */}
-                <p className="text-sm text-muted-foreground">
-                    © {currentYear} CodeAI. All rights reserved.
+                <p className="text-sm text-foreground">
+                    © {currentYear} Swift Code. All rights reserved.
                 </p>
 
                 {/* Social Links */}

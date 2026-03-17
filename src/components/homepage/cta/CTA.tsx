@@ -1,13 +1,18 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+import Image from "next/image";
 import Link from "next/link";
 
 export default function CTA() {
     return (
         <>
-            <section className="py-12 sm:py-20">
+            <section className="py-10 sm:py-20">
                 <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+                    {/* Logo */}
+            <div className="flex justify-center gap-2 mb-4">
+                <Image src="/logo-dark.svg" alt="Swift Code" width={75} height={75} className="dark:invert" />
+            </div>
                     <div className="text-center">
                         <h2 className="text-3xl font-bold sm:text-4xl mb-4">Start coding with AI today</h2>
                         <p className="text-[#888] text-base leading-relaxed mb-8 max-w-md mx-auto">
