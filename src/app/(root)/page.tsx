@@ -6,6 +6,7 @@ import HowItWorks from "@/components/homepage/howitworks/page";
 import ApiKeySection from "@/components/homepage/api-key/api-key-section";
 import PricingSection from "@/components/homepage/pricing/pricing";
 import CTA from "@/components/homepage/cta/CTA";
+import Footer from "@/components/homepage/footer/footer";
 
 export default function Home() {
 
@@ -19,6 +20,7 @@ export default function Home() {
       <ApiKeySection />
       <PricingSection />
       <CTA />
+      <Footer />
     </div>
     </>
   );
