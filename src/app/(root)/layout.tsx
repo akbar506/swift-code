@@ -1,5 +1,4 @@
 import { Metadata } from "next"
-import Header from "@/components/header/page"
 
 export const metadata: Metadata = {
     title: "Swift Code - The AI-powered IDE that runs in your browser",
@@ -9,7 +8,6 @@ export const metadata: Metadata = {
 export default async function Layout({ children }: { children: React.ReactNode }) {
     return (
         <>
-            <Header />
             {children}
         </>
     )
