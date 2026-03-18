@@ -1,12 +1,12 @@
 "use client";
-import HeroSection from "@/components/homepage/Hero/hero-section";
-import Header from "@/components/homepage/header/page";
-import FeaturesSection from "@/components/homepage/features/page";
-import HowItWorks from "@/components/homepage/howitworks/page";
-import ApiKeySection from "@/components/homepage/api-key/api-key-section";
-import PricingSection from "@/components/homepage/pricing/pricing";
-import CTA from "@/components/homepage/cta/CTA";
-import Footer from "@/components/homepage/footer/footer";
+import HeroSection from "@/module/homepage/components/Hero/hero-section";
+import Header from "@/module/homepage/components/header/page";
+import FeaturesSection from "@/module/homepage/components/features/page";
+import HowItWorks from "@/module/homepage/components/howitworks/page";
+import ApiKeySection from "@/module/homepage/components/api-key/api-key-section";
+import PricingSection from "@/module/homepage/components/pricing/pricing";
+import CTA from "@/module/homepage/components/cta/CTA";
+import Footer from "@/module/homepage/components/footer/footer";
 
 export default function Home() {
 

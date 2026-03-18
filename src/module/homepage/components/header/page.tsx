@@ -1,7 +1,7 @@
 "use client";
 import Image from "next/image";
 import Link from "next/link";
-import { Button } from "../../ui/button";
+import { Button } from "../../../../components/ui/button";
 import { useTheme } from "next-themes";
 import { Moon, Sun } from "lucide-react";
 import { useSession } from "next-auth/react";
